@@ -10,8 +10,9 @@ let USER_SCHEMA = new  MONGOOSE.Schema({
         type: String,
         required: true
     },
-    CreateAt: Number,
-    CreatedBy: String
+    CreatedAt: Number,
+    CreatedBy: String,
+    Status: String
 });
 
 module.exports = MONGOOSE.model('User', USER_SCHEMA); 

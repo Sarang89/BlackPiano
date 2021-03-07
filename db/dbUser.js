@@ -19,7 +19,7 @@ exports.fetchUser = async(email) =>{
         let result = await USER_SCHEMA.find({
             Email: email
         })
-        .select('-Password')
+        .select('-Password -_id -__v')
         ;
         console.log(`Fetched: ${result.Email}`);
         return result;
@@ -36,7 +36,7 @@ exports.loginUser = async(obj) =>{
         })
         ;
         console.log(`Fetched: ${result.Email}`);
-        return result[0];
+        return result[0]._doc;
     } catch (error) {
         console.log(error);
         throw error;

@@ -9,10 +9,13 @@ exports.createUser = async (body)=>{
             User: body.user
         }
         let result = await USER.createUser(obj);
-        delete result.Password;
-        return result;
+        let returnValue = {
+            email: result.Email,
+            name: result.Name
+        }
+        return returnValue;
     } catch (error) {
-        res.status(400).send("Could not create the User!");
+        throw error;
     }
 }
 
@@ -22,6 +25,10 @@ exports.fetchUser = async(body) =>{
             Email: body.email
         }
         let result = await USER.fetchUser(obj);
+        let returnValue = {
+            email: result.Email,
+            name: result.Name
+        }
         return result;
     } catch (error) {
        throw error;
@@ -35,7 +42,12 @@ exports.loginUser = async(body) =>{
             Password: body.password
         }
         let result = await USER.loginUser(obj);
-        return result;
+        let returnValue = {
+            email: result.Email,
+            name: result.Name,
+            token: result.Token
+        }
+        return returnValue;
     } catch (error) {
         console.log(error);
         throw error;

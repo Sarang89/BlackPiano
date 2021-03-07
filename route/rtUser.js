@@ -1,18 +1,25 @@
 const USER = require('../presentation/presUser');
 const ROUTER = require('express').Router();
+const UNPROTECTED_ROUTER = require('express').Router();
 const MIDDLEWARE = require('./middleware');
+const PASSPORT = require('passport')
 ROUTER.post("*", require('./middleware').checkBody);
+UNPROTECTED_ROUTER.post("*", require('./middleware').checkBody);
+
+UNPROTECTED_ROUTER.post("/login", loginUser);
+ROUTER.use("/",PASSPORT.authenticate('jwt', {session: false}));
 
 ROUTER.post("/", createUser);
 ROUTER.get("/", fetchUser);
-ROUTER.post("/login", loginUser);
+
 
 async function createUser (req, res){
     try {
+        req.body.user = req.user_details.email;
         let result = await USER.createUser(req.body);
         res.send(result);
     } catch (error) {
-        res.status(400).send("Could not create the User!");
+        MIDDLEWARE.handleReponseError(res, error, "Could Not Register User!");
     }
 }
 
@@ -40,5 +47,6 @@ async function loginUser(req, res){
 }
 
 module.exports = {
-    ROUTER
+    ROUTER,
+    UNPROTECTED_ROUTER
 }
