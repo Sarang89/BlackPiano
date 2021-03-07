@@ -5,4 +5,9 @@
 
 2. Setup:
 2.1. Have provided a back-door to create the user initally. Credentials (email: admin@blackpiano.com, password: bLACKpIANO).A mongo script would be better.
-2.2. .env file is needed.   
+2.2. .env file is needed. 
+
+3. ".env" file should have the following keys
+HTTP_PORT=NUMBER
+DB_URL=mongodb://127.0.0.1/DATABASE_NAME
+JWT_SECRET=SECRET  
