@@ -21,7 +21,6 @@ exports.fetchUser = async(email) =>{
         })
         .select('-Password -_id -__v')
         ;
-        console.log(`Fetched: ${result.Email}`);
         return result;
     } catch (error) {
         console.log(error);
@@ -35,8 +34,20 @@ exports.loginUser = async(obj) =>{
             Email: obj.Email,
         })
         ;
-        console.log(`Fetched: ${result.Email}`);
         return result[0]._doc;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+exports.removeUser = async(obj) =>{
+    try {
+        let result = await USER_SCHEMA.deleteOne({
+            Email: obj,
+        })
+        ;
+        return result.deletedCount;
     } catch (error) {
         console.log(error);
         throw error;

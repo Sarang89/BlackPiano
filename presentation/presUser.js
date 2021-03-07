@@ -54,6 +54,20 @@ exports.loginUser = async(body) =>{
     }
 }
 
+exports.removeUser = async(body) =>{
+    try {
+        let obj = {
+            Email: body.email
+        }
+        let result = await USER.removeUserHard(obj);
+        if(result == 1)
+        return "User deleted succesfully!";
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 exports.One = async(body) =>{
     try {
         

@@ -96,3 +96,25 @@ exports.loginUser = async (user_details) =>{
         throw error;
     }
 }
+
+/**
+ * Removes User Record from Database  
+ * @param {Object} user_details - The user account details
+ * @return {Object} result - Confirmation whether the record is deleted
+ */
+exports.removeUserHard = async(user_details) =>{
+    try {
+        let result = await USER.fetchUser(user_details.Email);
+        if(!result.length){
+            let error = {};
+            error.code = 1;
+            error.message = "Requested user does not exist!";
+            throw error;
+        }
+        result = await USER.removeUser(user_details.Email)
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
